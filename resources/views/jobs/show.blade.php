@@ -20,6 +20,7 @@
         <h5 class="mb-1 text-3xl font-medium text-gray-900 dark:text-white">{{ $job->title }}</h5>
         <span class="text-xl text-gray-500 dark:text-gray-400">{{ $job->company }}</span>
         <span class="text-xl text-gray-500 dark:text-gray-400">{{ $job->location }}</span>
+        <span class="text-xl text-gray-500 dark:text-gray-400">{{ $job->type->name }}</span>
         <p class="text-xl text-gray-200 dark:text-gray-200 my-8 text-center">{{ $job->description }}</p>
         <div class="flex mt-4 md:mt-6">
             <a href="mailto:{{ $job->email }}"

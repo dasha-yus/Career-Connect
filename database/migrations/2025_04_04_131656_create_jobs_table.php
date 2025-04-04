@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->id();  // Primary key
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('type_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->string('company');
             $table->string('website');
@@ -21,10 +23,6 @@ return new class extends Migration
             $table->string('location');
             $table->text('description');
             $table->timestamps();
-            // $table->integer('job_type_id')->unsigned();
-
-            // Foreign key constraint
-            // $table->foreign('job_type_id')->references('id')->on('job_types')->onDelete('cascade');
         });
     }
 

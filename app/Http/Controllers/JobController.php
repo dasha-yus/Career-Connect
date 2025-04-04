@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class JobController
@@ -24,7 +26,8 @@ class JobController
 
     public function create()
     {
-        return view('jobs.create');
+        $types = Type::all();
+        return view('jobs.create', ['types' => $types]);
     }
 
     public function store(Request $request)
@@ -41,6 +44,9 @@ class JobController
 
         $formFields['logo'] = $request->file('logo')->store('logos', 'public');
 
+        $formFields['user_id'] = Auth::id();
+        $formFields['type_id'] = (int) $request['type'];
+
         Job::create($formFields);
 
         return redirect('/')->with('message', 'Job created successfully');
@@ -48,11 +54,16 @@ class JobController
 
     public function edit(Job $job)
     {
-        return view('jobs.edit', ['job' => $job]);
+        $types = Type::all();
+        return view('jobs.edit', ['job' => $job, 'types' => $types]);
     }
 
     public function update(Request $request, Job $job)
     {
+        if ($job->user_id != Auth::id()) {
+            abort(403, 'Unauthorized Action');
+        }
+
         $formFields = $request->validate([
             'title' => 'required',
             'company' => 'required',
@@ -66,6 +77,8 @@ class JobController
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
+        $formFields['type_id'] = (int) $request['type'];
+
         $job->update($formFields);
 
         return redirect("/jobs/$job->id")->with('message', 'Job updated successfully');
@@ -73,6 +86,10 @@ class JobController
 
     public function destroy(Job $job)
     {
+        if ($job->user_id != Auth::id()) {
+            abort(403, 'Unauthorized Action');
+        }
+
         if ($job->logo && Storage::disk('public')->exists($job->logo)) {
             Storage::disk('public')->delete($job->logo);
         }

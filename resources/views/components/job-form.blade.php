@@ -1,4 +1,4 @@
-@props(['job'])
+@props(['job', 'types'])
 
 <form class="mx-auto mt-8 w-full" method="POST" action="{{ !empty($job) ? '/jobs/' . $job->id : '/jobs' }}"
     enctype="multipart/form-data">
@@ -17,6 +17,20 @@
         @error('title')
             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
         @enderror
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <label for="type" class="inline-block text-lg mb-2 text-gray-200 text-sm">
+            Job type
+        </label>
+        <select id="type" name="type"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee dark:bg-gray-900">
+            @foreach ($types as $type)
+                <option value="{{ $type->id }}"
+                    @if (isset($job) && $job->type->id === $type->id) selected @elseif(!isset($job) && $loop->first) selected @endif>
+                    {{ $type->name }}
+                </option>
+            @endforeach
+        </select>
     </div>
     <div class="relative z-0 w-full mb-5 group mt-8">
         <label for="company" class="inline-block text-lg mb-2 text-gray-200 text-sm">
