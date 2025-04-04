@@ -1,1 +1,1 @@
-<a href="/" class="text-gray-200 self-start"><i class="fa-solid fa-arrow-left"></i> Back</a>
+<a href="/" class="text-gray-200 self-start mb-4"><i class="fa-solid fa-arrow-left"></i> Back</a>

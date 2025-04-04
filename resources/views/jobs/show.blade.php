@@ -1,19 +1,7 @@
 <x-layout class="lg:px-48 sm:px-16 flex flex-col justify-center items-center h-full">
     <div
         class="py-12 px-16 mx-auto my-8 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center">
-        <div class="w-full flex justify-between mb-4 items-center">
-            <x-home-btn />
-            <div class="flex gap-4">
-                <a href="/jobs/{{ $job->id }}/edit" class="text-gray-200">
-                    <i class="fa-solid fa-pencil"></i> Edit
-                </a>
-                <form method="POST" action="/jobs/{{ $job->id }}" onsubmit="return confirmDelete();">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="text-red-500"><i class="fa-solid fa-trash"></i> Delete</button>
-                </form>
-            </div>
-        </div>
+        <x-home-btn />
         <img class="w-48 h-48 mb-3 rounded-full shadow-lg"
             src="{{ Storage::disk('public')->exists($job->logo) ? asset('storage/' . $job->logo) : asset($job->logo) }}"
             alt="logo" />
@@ -31,9 +19,3 @@
         </div>
     </div>
 </x-layout>
-
-<script>
-    function confirmDelete() {
-        return confirm('Are you sure you want to delete this job?');
-    }
-</script>

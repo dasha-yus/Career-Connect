@@ -94,6 +94,11 @@ class JobController
             Storage::disk('public')->delete($job->logo);
         }
         $job->delete();
-        return redirect('/')->with('message', 'Job deleted successfully');
+        return redirect('/jobs/manage')->with('message', 'Job deleted successfully');
+    }
+
+    public function manage()
+    {
+        return view('jobs.manage', ['jobs' => Auth::user()->jobs()->get()]);
     }
 }

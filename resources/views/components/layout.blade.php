@@ -20,11 +20,13 @@
                 <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">CareerConnect</span>
             </a>
-            <div class="flex items-center space-x-4 rtl:space-x-reverse">
+            <div class="flex items-center space-x-6 rtl:space-x-reverse">
                 @auth
                     <span class="font-bold uppercase text-white">
                         Welcome, {{ auth()->user()->name }}
                     </span>
+                    <a href="/jobs/manage" class="hover:text-blue-500 text-white"><i class="fa-solid fa-gear"></i> Manage
+                        jobs</a>
                     <form class="inline hover:text-blue-500 text-white" method="POST" action="/logout">
                         @csrf
                         <button type="submit">

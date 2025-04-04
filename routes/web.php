@@ -17,6 +17,8 @@ Route::prefix('jobs')->group(function () {
 
     Route::delete('/{job}', [JobController::class, 'destroy'])->middleware('auth');
 
+    Route::get('/manage', [JobController::class, 'manage'])->middleware('auth');
+
     Route::get('/{job}', [JobController::class, 'show']);
 });
 
